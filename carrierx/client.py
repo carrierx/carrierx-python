@@ -1,6 +1,7 @@
 from carrierx.base.rest_client import RestClient, RestConnection
 from carrierx.resources import core
 from carrierx.resources import mediator
+from carrierx.resources import flexml
 
 
 class CoreClient(RestClient):
@@ -20,3 +21,10 @@ class MediatorClient(RestClient):
         self.bindings = mediator.Bindings(self.connection)
         self.dids = mediator.Dids(self.connection)
 
+
+class FlexmlClient(RestClient):
+    def __init__(self, username, password, base_url="htts://api.carrierx.com/flexml/v1"):
+        super().__init__(RestConnection(username, password, base_url))
+
+        self.calls = flexml.Calls(self.connection)
+        self.dids = flexml.Dids(self.connection)
