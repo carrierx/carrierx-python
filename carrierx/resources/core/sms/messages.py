@@ -9,7 +9,12 @@ class Message(ItemResource):
         'to_did',
         'message',
     )
-    retrieve_fields = ()
+    retrieve_fields = (
+        'message_sid',
+        'from_did',
+        'to_did',
+        'message',
+    )
     update_fields = ()
     fields = set(create_fields) | set(retrieve_fields) | set(update_fields)
     sid_field = 'message_sid'
