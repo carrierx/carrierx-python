@@ -48,7 +48,7 @@ class File(ItemResource):
     )
     update_fields = create_fields
     fields = set(create_fields) | set(retrieve_fields) | set(update_fields)
-    sid_field = 'container_sid'
+    sid_field = 'file_sid'
 
 
 class Files(ListResource):
