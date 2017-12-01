@@ -12,6 +12,8 @@ class CoreClient(RestClient):
         self.storage = lambda: None
         self.storage.containers = core.storage.Containers(self.connection)
         self.storage.files = core.storage.Files(self.connection)
+        self.sms = lambda: None
+        self.sms.messages = core.sms.Messages(self.connection)
 
 
 class MediatorClient(RestClient):
