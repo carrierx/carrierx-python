@@ -9,6 +9,7 @@ class Call(ItemResource):
         'called_did',
         'url',
         'method',
+        'attributes',
     )
     retrieve_fields = ()
     update_fields = ()
