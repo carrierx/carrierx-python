@@ -14,6 +14,9 @@ class CoreClient(RestClient):
         self.storage.files = core.storage.Files(self.connection)
         self.sms = lambda: None
         self.sms.messages = core.sms.Messages(self.connection)
+        self.shortener = lambda: None
+        self.shortener.domains = core.shortener.Domains(self.connection)
+        self.shortener.links = core.shortener.Links(self.connection)
 
 
 class MediatorClient(RestClient):
