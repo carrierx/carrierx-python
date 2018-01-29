@@ -11,19 +11,21 @@ class Call(ItemResource):
         'method',
         'status_callback_url',
         'status_callback_method'
+        'attributes',
     )
-    retrieve_fields = ('call_sid',
-                       'account_sid',
-                       'date_created',
-                       'calling_did',
-                       'called_did',
-                       'url',
-                       'method',
-                       'status_callback_url',
-                       'status_callback_method',
-                       'delay',
-                       'attributes'
-                       )
+    retrieve_fields = (
+        'call_sid',
+        'account_sid',
+        'date_created',
+        'calling_did',
+        'called_did',
+        'url',
+        'method',
+        'status_callback_url',
+        'status_callback_method',
+        'delay',
+        'attributes',
+    )
     update_fields = ('status_callback_url', 'status_callback_method')
     fields = set(create_fields) | set(retrieve_fields) | set(update_fields)
     sid_field = 'call_sid'
