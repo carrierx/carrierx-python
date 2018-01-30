@@ -10,7 +10,7 @@ class Call(ItemResource):
         'url',
         'method',
         'status_callback_url',
-        'status_callback_method'
+        'status_callback_method',
         'attributes',
     )
     retrieve_fields = (
