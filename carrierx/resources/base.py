@@ -181,7 +181,7 @@ class ListResource(RestClient):
         else:
             return data > 0
 
-    def list(self, filter=None, offset=None, limit=None):
+    def list(self, filter=None, offset=None, limit=None, order=None):
         if offset is None:
             offset = 0
         if limit is None:
@@ -199,6 +199,7 @@ class ListResource(RestClient):
                 'offset': offset,
                 'limit': limit,
                 'filter': filter,
+                'order': order,
             },
         )
         _validate_status_code(r)
