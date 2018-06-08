@@ -24,6 +24,7 @@ class Endpoint(ItemResource):
         'endpoint_sid',
         'addresses',
         'attributes',
+        'properties',
         'capacity',
         'name',
         'partner_sid',
