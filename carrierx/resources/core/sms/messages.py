@@ -14,6 +14,9 @@ class Message(ItemResource):
         'from_did',
         'to_did',
         'message',
+        'date_created',
+        'date_status_changed',
+        'status'
     )
     update_fields = ()
     fields = set(create_fields) | set(retrieve_fields) | set(update_fields)
