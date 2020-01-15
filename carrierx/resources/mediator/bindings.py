@@ -9,6 +9,7 @@ class Binding(ItemResource):
         'account_sid',
         'origination_did',
         'redirect_did',
+        'reuse',
         'destination_did',
         'maximum_ttl',
         'wait_origination_did_ttl',
