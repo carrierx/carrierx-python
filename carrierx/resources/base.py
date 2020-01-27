@@ -1,16 +1,15 @@
 import json
 import logging
+
 import requests
 
+from carrierx.base.rest_client import RestClient
 from carrierx.exceptions import (
-    ApiMultipleFoundException,
     ApiNotFoundException,
     ApiPermissionException,
     ApiServerError,
     ApiValueError,
 )
-from carrierx.base.rest_client import RestClient
-
 
 logger = logging.getLogger()
 
@@ -79,12 +78,15 @@ class ItemResource(RestClient):
             if k not in self.update_fields:
                 raise ApiValueError("Field {0} not allowed in update, must be in {1}".format(k, self.update_fields))
 
-        r = requests.patch(
-            url=url,
-            auth=self.connection.auth,
-            headers=self.connection.headers,
-            data=json.dumps(data),
-        )
+        request_args = {'url': url,
+                        'headers': self.connection.headers,
+                        'data': json.dumps(data)}
+
+        if not self.connection.auth_token:
+            request_args['auth'] = self.connection.auth
+
+        r = requests.patch(**request_args)
+
         _validate_status_code(r)
 
         return r.content.decode()
@@ -92,11 +94,14 @@ class ItemResource(RestClient):
     def delete(self):
         url = '{0}/{1}/{2}'.format(self.connection.base_url, self.endpoint_path, getattr(self, self.sid_field))
 
-        r = requests.delete(
-            url=url,
-            auth=self.connection.auth,
-            headers=self.connection.headers,
-        )
+        request_args = {'url': url,
+                        'headers': self.connection.headers}
+
+        if not self.connection.auth_token:
+            request_args['auth'] = self.connection.auth
+
+        r = requests.delete(**request_args)
+
         _validate_status_code(r)
 
         return r.content.decode()
@@ -120,12 +125,15 @@ class ListResource(RestClient):
             instance = self.item_resource.from_dict(data)
 
         logger.debug("POST {0}: {1}: {2!r}".format(url, data, instance))
-        r = requests.post(
-            url=url,
-            auth=self.connection.auth,
-            headers=self.connection.headers,
-            data=instance.to_json(),
-        )
+
+        request_args = {'url': url,
+                        'headers': self.connection.headers,
+                        'data': instance.to_json()}
+
+        if not self.connection.auth_token:
+            request_args['auth'] = self.connection.auth
+
+        r = requests.post(**request_args)
         _validate_status_code(r)
 
         try:
@@ -144,6 +152,14 @@ class ListResource(RestClient):
             auth=self.connection.auth,
             headers=self.connection.headers,
         )
+
+        request_args = {'url': url, 'headers': self.connection.headers}
+
+        if not self.connection.auth_token:
+            request_args['auth'] = self.connection.auth
+
+        r = requests.get(**request_args)
+
         _validate_status_code(r)
         try:
             if self.wrapper:
@@ -158,17 +174,21 @@ class ListResource(RestClient):
     def exists(self, filter=None):
         url = '{0}/{1}'.format(self.connection.base_url, self.endpoint_path)
 
-        r = requests.get(
-            url=url,
-            auth=self.connection.auth,
-            headers=self.connection.headers,
-            params={
+        request_args = {
+            'url': url,
+            'headers': self.connection.headers,
+            'params': {
                 'offset': 0,
                 'limit': 1,
                 'includeFields': self.item_resource.sid_field,
                 'filter': filter,
-            },
-        )
+            }
+        }
+
+        if not self.connection.auth_token:
+            request_args['auth'] = self.connection.auth
+
+        r = requests.get(**request_args)
         _validate_status_code(r)
 
         try:
@@ -191,17 +211,22 @@ class ListResource(RestClient):
 
         url = '{0}/{1}'.format(self.connection.base_url, self.endpoint_path)
 
-        r = requests.get(
-            url=url,
-            auth=self.connection.auth,
-            headers=self.connection.headers,
-            params={
+        request_args = {
+            'url': url,
+            'headers': self.connection.headers,
+            'params': {
                 'offset': offset,
                 'limit': limit,
                 'filter': filter,
                 'order': order,
             },
-        )
+        }
+
+        if not self.connection.auth_token:
+            request_args['auth'] = self.connection.auth
+
+        r = requests.get(**request_args)
+
         _validate_status_code(r)
 
         try:

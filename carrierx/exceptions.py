@@ -22,3 +22,7 @@ class ApiServerError(CxException):
 
 class ApiValueError(CxException):
     pass
+
+
+class AuthNotProvidedException(CxException):
+    pass
