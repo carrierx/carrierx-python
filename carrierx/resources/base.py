@@ -19,6 +19,8 @@ def _validate_status_code(r):
         return
     if r.status_code == 201:
         return
+    elif r.status_code == 204:
+        return
     elif r.status_code == 403:
         raise ApiPermissionException()
     elif r.status_code == 404:
