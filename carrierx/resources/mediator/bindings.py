@@ -13,6 +13,7 @@ class Binding(ItemResource):
         'destination_did',
         'maximum_ttl',
         'wait_origination_did_ttl',
+        'dtmf',
         'attributes',
     )
     retrieve_fields = (
@@ -25,6 +26,7 @@ class Binding(ItemResource):
         'destination_did',
         'maximum_ttl',
         'wait_origination_did_ttl',
+        'dtmf',
         'attributes',
     )
     update_fields = create_fields
