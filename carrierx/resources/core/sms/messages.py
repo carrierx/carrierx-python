@@ -8,6 +8,7 @@ class Message(ItemResource):
         'from_did',
         'to_did',
         'message',
+        'media_urls',
     )
     retrieve_fields = (
         'message_sid',
